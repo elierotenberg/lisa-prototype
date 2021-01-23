@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import type { FunctionComponent } from "react";
-import { NavBar } from "../components/NavBar/NavBar";
+import { MainNavBar } from "../components/MainNavBar/MainNavBar";
 import { MdxProvider } from "../components/MdxProvider/MdxProvider";
 import { ChakraProvider } from "../components/ChakraProvider/ChakraProvider";
 
@@ -8,7 +8,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider>
       <MdxProvider>
-        <NavBar />
+        <MainNavBar />
         <Component {...pageProps} />
       </MdxProvider>
     </ChakraProvider>

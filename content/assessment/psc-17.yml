@@ -1,0 +1,246 @@
+assessmentId: psc-17
+revisionId: "01"
+title: Pediatric Symptom Checker
+description: >
+  The goal of this assessment is ...
+
+  Please pick for each item the heading that best fits
+items:
+  - label: 1. Fidgety, unable to sit still
+    description: >
+      Example: can't stay seated during class
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      attention: 1
+  - label: 2. Feels sad, unhappy
+    description: >
+      Examples: doesn't smile often, cries, etc.
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      internalizing: 1
+  - label: 3. Daydreams too much
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      attention: 1
+  - label: 4. Refuses to share
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 5. Does not understand other people's feelings
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 6. Feels hopeless
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      internalizing: 1
+  - label: 7. Has trouble concentrating
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      attention: 1
+  - label: 8. Fights with other children
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 9. Is down on him or herself
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      internalizing: 1
+  - label: 10. Blames others for his or her troubles
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 11. Seems to be having less fun
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      internalizing: 1
+  - label: 12. Does not listen to rules
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 13. Acts as if driven by a motor
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      attention: 1
+  - label: 14. Teases others
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 15. Worries a lot
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      internalizing: 1
+  - label: 16. Takes things that do not belong to him or her
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      externalizing: 1
+  - label: 17. Distracted easily
+    description: >
+      Examples: ...
+    options:
+      - label: Never
+        weight: 0
+      - label: Sometimes
+        weight: 1
+      - label: Often
+        weight: 2
+      - label: I don't know
+        weight: 0
+    scoring:
+      attention: 1

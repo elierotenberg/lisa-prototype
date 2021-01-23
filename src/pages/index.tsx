@@ -1,11 +1,17 @@
-import type { FunctionComponent } from "react";
-import { Container } from "@chakra-ui/react";
+import { Fragment, FunctionComponent } from "react";
+import Head from "next/head";
 
-import About from "../../content/about.mdx";
+import AboutContent from "../../content/about.mdx";
+import { MainContainer } from "../components/MainContainer/MainContainer";
 
-const Home: FunctionComponent = () => (
-  <Container maxW="80ch">
-    <About />
-  </Container>
+const About: FunctionComponent = () => (
+  <Fragment>
+    <Head>
+      <title>About LISA</title>
+    </Head>
+    <MainContainer>
+      <AboutContent />
+    </MainContainer>
+  </Fragment>
 );
-export default Home;
+export default About;

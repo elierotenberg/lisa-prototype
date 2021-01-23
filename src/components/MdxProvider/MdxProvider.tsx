@@ -1,6 +1,8 @@
-import { Heading, Image, Box } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Heading, Image, Box, ListItem, UnorderedList } from "@chakra-ui/react";
 import { MDXProvider as BaseMdxProvider, Components } from "@mdx-js/react";
 import { FunctionComponent } from "react";
+import { NavLink } from "../NavLink/NavLink";
 
 const components: Components = {
   h1: ({ children }) => (
@@ -36,11 +38,30 @@ const components: Components = {
   img: ({ src, alt }) => (
     <Image d="block" mx="auto" my="0.5em" src={src} alt={alt} />
   ),
+  Image: ({ src, alt, maxWidth }) => (
+    <Image
+      src={src}
+      alt={alt}
+      d="block"
+      mx="auto"
+      my="0.5em"
+      maxWidth={maxWidth}
+    />
+  ),
+  ExternalLink: ({ href, children, ...props }) => (
+    <NavLink href={href} {...props} target="_blank">
+      {children}
+      <ExternalLinkIcon ml="0.5em" />
+    </NavLink>
+  ),
   p: ({ children }) => (
     <Box as="p" my="0.25em">
       {children}
     </Box>
   ),
+  a: ({ href, ...props }) => <NavLink href={href} {...props} />,
+  ul: (props) => <UnorderedList {...props} />,
+  li: (props) => <ListItem {...props} />,
   wrapper: ({ children }) => (
     <Box fontSize="sm" textAlign="justify">
       {children}
