@@ -24,18 +24,35 @@ import {
   VStack,
   Text,
   Button,
+  SimpleGrid,
 } from "@chakra-ui/react";
-import interpolate from "color-interpolate";
 
-const domains = [
-  "Anxiety, shyness",
-  "Sadness, discouragement",
-  "Inattention, impulsivity",
-  "Irritability",
-  "Social issues",
-];
-
-const colorMap = interpolate(["green", "yellow", "red"]);
+const domains = `
+Specific phobias 
+Sadness, discouragement or loss of pleasure
+Inattention
+Hyperactivity / Impulsivity
+Irritability
+Social contact issues
+Inflexible and repetitive behaviors
+General Impairment
+Depression
+Reading
+Social Cognition
+Social Anxiety
+Math
+Written Expression Skills
+Comprehension and Conceptual Learning
+Novel problem Solving
+Factual Memory
+Working Memory
+Processing Speed
+Visual-Spatial organization
+Sustained Sequential Processing
+Conduct/Oppositional Defiance
+`
+  .split("\n")
+  .filter((line) => line.length > 0);
 
 const DashboardDemo: FunctionComponent = () => {
   const [chance, setChance] = useState(new Chance());
@@ -54,13 +71,12 @@ const DashboardDemo: FunctionComponent = () => {
       domains.map((domain) => {
         const p = chance.floating({ min: 0, max: 1 });
         const score = p * 4 - 2;
-        const fill = colorMap(p);
         return {
           name: domain,
+          shortName: domain.length > 14 ? `${domain.slice(0, 11)}...` : domain,
           domain,
           p,
           [firstName]: score,
-          fill,
         };
       }),
     [firstName, chance]
@@ -81,10 +97,15 @@ const DashboardDemo: FunctionComponent = () => {
             <Heading as="h3" size="sm">
               Overview
             </Heading>
-            <Center overflow="hidden" maxW="100%">
-              <RadarChart outerRadius={90} width={600} height={400} data={data}>
+            <Center overflow="hidden" maxW="100%" fontSize="xs">
+              <RadarChart
+                outerRadius={200}
+                width={800}
+                height={800}
+                data={data}
+              >
                 <PolarGrid />
-                <PolarAngleAxis dataKey="domain" />
+                <PolarAngleAxis dataKey="shortName" />
                 <PolarRadiusAxis domain={[-2, 2]} />
                 <Radar
                   name={firstName}
@@ -99,48 +120,62 @@ const DashboardDemo: FunctionComponent = () => {
             <Heading as="h3" size="sm" mb={4}>
               Breakdown
             </Heading>
-            <VStack alignItems="stretch" spacing={4} pl={4}>
+            <SimpleGrid
+              minChildWidth="200px"
+              alignItems="center"
+              justifyContent="center"
+              spacing={4}
+            >
               {data.map((item) => {
                 const { p } = item;
                 const translateY = `${(1 - p) * 140}px`;
                 return (
-                  <VStack key={item.domain} alignItems="stretch">
-                    <Heading as="h4" size="sm">
-                      {item.name}
-                    </Heading>
-                    <HStack
-                      alignItems="stretch"
-                      spacing={4}
-                      position="relative"
-                    >
-                      <Box
-                        height="140px"
-                        width="20px"
-                        bgGradient="linear(red, yellow, green)"
-                      />
-                      <Box
-                        position="absolute"
-                        height="3px"
-                        width="30px"
-                        bgColor="#0000FF"
-                        left={0}
-                        top={0}
-                        transform={`translate(-21.5px, ${translateY})`}
-                      />
-                      <Text>
-                        {p < 0.25
-                          ? "Level 1 intervention"
-                          : p < 0.5
-                          ? "Level 2 intervention"
-                          : p < 0.75
-                          ? "Level 3 intervention"
-                          : "Level 4 intervention"}
-                      </Text>
-                    </HStack>
-                  </VStack>
+                  <Box key={item.domain}>
+                    <VStack alignItems="stretch">
+                      <Heading
+                        as="h4"
+                        size="xs"
+                        maxWidth="100%"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="nowrap"
+                      >
+                        {item.name}
+                      </Heading>
+                      <HStack
+                        alignItems="stretch"
+                        spacing={4}
+                        position="relative"
+                      >
+                        <Box
+                          height="140px"
+                          width="20px"
+                          bgGradient="linear(red, yellow, green)"
+                        />
+                        <Box
+                          position="absolute"
+                          height="3px"
+                          width="30px"
+                          bgColor="#0000FF"
+                          left={0}
+                          top={0}
+                          transform={`translate(-21.5px, ${translateY})`}
+                        />
+                        <Text>
+                          {p < 0.25
+                            ? "Level 1 intervention"
+                            : p < 0.5
+                            ? "Level 2 intervention"
+                            : p < 0.75
+                            ? "Level 3 intervention"
+                            : "Level 4 intervention"}
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </Box>
                 );
               })}
-            </VStack>
+            </SimpleGrid>
           </Box>
         </VStack>
       </MainContainer>
