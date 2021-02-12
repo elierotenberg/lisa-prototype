@@ -11,6 +11,7 @@ import {
   Fragment,
   FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -41,6 +42,10 @@ const DashboardDemo: FunctionComponent = () => {
 
   const randomize = useCallback(() => {
     setChance(new Chance());
+  }, []);
+
+  useEffect(() => {
+    randomize();
   }, []);
 
   const firstName = useMemo(() => chance.name(), [chance]);
