@@ -32,6 +32,7 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ErrorBar } from 'recharts';
+import GaugeChart from 'react-gauge-chart'
 
 const domains = `
 111Specific phobias 
@@ -93,6 +94,11 @@ const DashboardDemo: FunctionComponent = () => {
     setDate(date);
   }, []);
 
+  const getArcsLength = (errors, value) => {
+    console.log(errors, value, [value - errors[0]/10, errors[0]/10 + errors[1]/10, 1 - (value+errors[1]/10)])
+    return [value - errors[0]/10, errors[0]/10 + errors[1]/10, 1 - (value+errors[1]/10)]
+  }
+
   const getData = () => {
     if (date == "29/04/2021") {
       return [
@@ -109,7 +115,7 @@ const DashboardDemo: FunctionComponent = () => {
             "domain": "habits and repetitive behaviours",
             "scaled-follow-up-score": 2,
             "color-intensity-follow-up": 0.3,
-            "errors-entry-level": [4, 5],
+            "errors-entry-level": [2, 5],
             "errors-follow-up": [1, 5]
         }, 
         {
@@ -125,10 +131,10 @@ const DashboardDemo: FunctionComponent = () => {
         {
             "entry-level-score": -2, 
             "domain": "substance use",
-            "scaled-follow-up-score": -5,
+            "scaled-follow-up-score": -4,
             "color-intensity-follow-up": 1,
             "errors-entry-level": [1, 1],
-            "errors-follow-up": [5, 5]
+            "errors-follow-up": [0, 5]
         }
       ];
     } else {
@@ -146,8 +152,8 @@ const DashboardDemo: FunctionComponent = () => {
             "domain": "habits and repetitive behaviours",
             "scaled-follow-up-score": 3,
             "color-intensity-follow-up": 0.4,
-            "errors-entry-level": [4, 5],
-            "errors-follow-up": [1, 5]
+            "errors-entry-level": [3, 5],
+            "errors-follow-up": [1, 2]
         }, 
         {
             "entry-level-score": 5, 
@@ -157,15 +163,15 @@ const DashboardDemo: FunctionComponent = () => {
         {
             "entry-level-score": 3, 
             "domain": "risk taking",
-            "errors-entry-level": [2, 4],
+            "errors-entry-level": [2, 2],
         }, 
         {
             "entry-level-score": -3, 
             "domain": "substance use",
-            "scaled-follow-up-score": -5,
+            "scaled-follow-up-score": -4,
             "color-intensity-follow-up": 1,
             "errors-entry-level": [1, 1],
-            "errors-follow-up": [5, 5]
+            "errors-follow-up": [0, 5]
         }
       ];
     }
@@ -238,6 +244,35 @@ const DashboardDemo: FunctionComponent = () => {
           </Box>
           <Button onClick={()=>{setDate("29/04/2021")}}>29/04/2021</Button>
           <Button onClick={()=>{setDate("02/05/2021")}}>02/05/2021</Button>
+          <b>test test</b>
+          {data.map((entry, index) => {
+            var entryLevelGauge = <div>
+              <b>{entry["errors-entry-level"]} {(entry["entry-level-score"]+5)/10}</b>
+              <GaugeChart 
+              id="gauge-chart-entry" 
+              arcsLength={getArcsLength(entry["errors-entry-level"], (entry["entry-level-score"]+5)/10)}
+              colors={["#FF5FFF", "#FFC3FF", "#FF5FFF"]} 
+              arcWidth={0.3} 
+              textColor="464A4F"
+              hideText={true}
+              percent={(entry["entry-level-score"]+5)/10} 
+            /></div>
+            if (entry["errors-follow-up"]) {
+              entryLevelGauge = <div>
+              {entryLevelGauge}
+              <GaugeChart 
+                  id="gauge-chart-follow-up" 
+                  arcsLength={getArcsLength(entry["errors-follow-up"], (entry["scaled-follow-up-score"]+5)/10)}
+                  colors={["#FFC3FF", "#FF5FFF", "#FFC3FF"]} 
+                  arcWidth={0.3} 
+                  textColor="464A4F"
+                  hideText={true}
+                  percent={(entry["scaled-follow-up-score"]+5)/10} 
+                /> </div>
+            }
+            return (entryLevelGauge)
+          })}
+          
         </VStack>
       </MainContainer>
     </Fragment>
