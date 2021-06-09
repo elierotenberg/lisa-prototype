@@ -202,10 +202,8 @@ const DashboardDemo: FunctionComponent = () => {
             </Heading>
             <Image src="media/legend-long.png" alt="Legend"/>
             <Center overflow="hidden" maxW="100%" fontSize="xs">
-              
+              <ResponsiveContainer width="100%" height={600}>
               <BarChart
-                width={800}
-                height={600}
                 data={data}
                 layout="vertical"
                 margin={{
@@ -247,7 +245,7 @@ const DashboardDemo: FunctionComponent = () => {
                 </Bar>
                 
                 
-              </BarChart>
+              </BarChart></ResponsiveContainer>
               
             </Center>
           </Box>
@@ -282,7 +280,7 @@ const DashboardDemo: FunctionComponent = () => {
                     <GaugeChart 
                       id="gauge-chart-follow-up" 
                       arcsLength={getArcsLength(entry["errors-follow-up"], (entry["scaled-follow-up-score"]+5)/10)}
-                      colors={["#FFC3FF", "#FF5FFF", "#FFC3FF"]} 
+                      colors={["#bddffd", "#0286fa", "#bddffd"]} 
                       arcWidth={0.3} 
                       textColor="464A4F"
                       hideText={true}
