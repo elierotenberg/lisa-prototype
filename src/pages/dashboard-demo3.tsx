@@ -56,6 +56,12 @@ type GradientBarProps = BoxProps & {
   readonly barHeight: string;
 };
 
+const nrOfLevels = 20;
+const colors = [
+  ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
+  ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
+];
+
 const GradientBar: FunctionComponent<GradientBarProps> = ({
   p,
   barHeight,
@@ -99,84 +105,218 @@ const DashboardDemo: FunctionComponent = () => {
   };
 
   const getData = () => {
-    if (date == "29/04/2021") {
-      return [
+    let obj = {
+      "Averages": 
+        {"Behavior": 3.8,
+          "Cognition": 3,
+          "Learning": 4,
+          "Emotions": 4.6, 
+          "Health": 5.666666667, 
+          "Language": 5, 
+          "Personality": 6.875,
+          "Social Function": 6
+        }
+      ,
+      "Behavior": [
         {
-          "entry-level-score": 1,
-          "domain": "activity",
-          "scaled-follow-up-score": 4,
-          "color-intensity-follow-up": 0.9,
-          "errors-entry-level": [1, 1],
-          "errors-follow-up": [0, 0],
-        },
-        {
-          "entry-level-score": -3,
+          "entry-level-score": 6,
           "domain": "habits and repetitive behaviours",
-          "scaled-follow-up-score": 2,
-          "color-intensity-follow-up": 0.3,
-          "errors-entry-level": [2, 3],
-          "errors-follow-up": [1, 4],
         },
+        {
+          "entry-level-score": 3,
+          domain: "risk taking",
+        },
+        {
+          "entry-level-score": 6,
+          "domain": "activity",
+        }, 
         {
           "entry-level-score": 2,
           domain: "impulsivity",
-          "errors-entry-level": [0, 1],
-        },
+        }
+      ],
+      "Cognition": [
         {
-          "entry-level-score": 4,
-          domain: "risk taking",
-          "errors-entry-level": [2, 2],
+          "entry-level-score": 2,
+          "domain": "Attention",
         },
-        {
-          "entry-level-score": 0,
-          domain: "substance use",
-          "scaled-follow-up-score": -4,
-          "color-intensity-follow-up": 1,
-          "errors-entry-level": [1, 1],
-          "errors-follow-up": [0, 3],
-        },
-      ];
-    } else {
-      return [
         {
           "entry-level-score": 1,
-          domain: "activity",
-          "scaled-follow-up-score": 4,
-          "color-intensity-follow-up": 1,
-          "errors-entry-level": [1, 1],
-          "errors-follow-up": [0, 0],
+          domain: "Planning and Organization",
         },
         {
-          "entry-level-score": -2,
-          domain: "habits and repetitive behaviours",
-          "scaled-follow-up-score": 3,
-          "color-intensity-follow-up": 0.4,
-          "errors-entry-level": [3, 1],
-          "errors-follow-up": [1, 2],
+          "entry-level-score": 3,
+          "domain": "Memory",
+        },
+        
+        {
+          "entry-level-score": 7,
+          domain: "Abstraction / Generalization",
+        },
+        {
+          "entry-level-score": 2,
+          domain: "Thinking / Processing speed",
+        },
+      ],
+      "Learning": [
+        {
+          "entry-level-score": 3,
+          "domain": "Reading",
+        },
+        {
+          "entry-level-score": 3,
+          domain: "Writing",
+        },
+        {
+          "entry-level-score": 3,
+          "domain": "Mathematics",
+        },
+        
+        {
+          "entry-level-score": 4,
+          domain: "Learning",
+        },
+        {
+          "entry-level-score": 7,
+          domain: "Academic Performance",
+        },
+      ],
+      "Emotions": [
+        {
+          "entry-level-score": 2,
+          "domain": "Irritability",
         },
         {
           "entry-level-score": 5,
-          domain: "impulsivity",
-          "errors-entry-level": [0, 1],
+          domain: "Mood",
         },
         {
-          "entry-level-score": 0,
-          domain: "risk taking",
-          "errors-entry-level": [2, 2],
+          "entry-level-score": 4,
+          "domain": "Emotional Reactivity",
+        },
+        
+        {
+          "entry-level-score": 5,
+          domain: "Stress level",
+        },
+        {
+          "entry-level-score": 7,
+          domain: "Worries",
+        },
+      ],
+      "Health": [
+        {
+          "entry-level-score": 5,
+          "domain": "Diet",
+        },
+        {
+          "entry-level-score": 7,
+          domain: "Energy levels",
+        },
+        {
+          "entry-level-score": 5,
+          "domain": "Gross motor skills",
+        },
+        
+        {
+          "entry-level-score": 4,
+          domain: "Fine motor skills",
+        },
+        {
+          "entry-level-score": 6,
+          domain: "Complaints of pain",
+        },
+        {
+          "entry-level-score": 7,
+          domain: "Hygiene",
+        },
+      ],
+      "Language": [
+        {
+          "entry-level-score": 3,
+          "domain": "Language (including gestures)",
+        },
+        {
+          "entry-level-score": 4,
+          domain: "Speech Quantity",
+        },
+        {
+          "entry-level-score": 8,
+          "domain": "Speech articulation",
+        },
+      ],
+      "Personality": [
+        {
+          "entry-level-score": 10,
+          "domain": "Temperament",
+        },
+        {
+          "entry-level-score": 3,
+          domain: "Confidence",
+        },
+        {
+          "entry-level-score": 6,
+          "domain": "Creativity",
+        },
+        
+        {
+          "entry-level-score": 10,
+          domain: "Responsibility",
+        },
+        {
+          "entry-level-score": 9,
+          domain: "Integrity",
+        },
+        {
+          "entry-level-score": 9,
+          domain: "Perseverance",
+        },
+        {
+          "entry-level-score": 5,
+          domain: "Sexual identity",
+        },
+        {
+          "entry-level-score": 3,
+          domain: "Sexual Behaviour",
+        },
+      ],
+      "Social Function": [
+        {
+          "entry-level-score": 7,
+          "domain": "Cooperativeness",
+        },
+        {
+          "entry-level-score": 8,
+          domain: "Following rules",
         },
         {
           "entry-level-score": 2,
-          domain: "substance use",
-          "scaled-follow-up-score": -4,
-          "color-intensity-follow-up": 1,
-          "errors-entry-level": [1, 1],
-          "errors-follow-up": [0, 3],
+          "domain": "Bullying",
         },
-      ];
+        
+        {
+          "entry-level-score": 2,
+          domain: "Social interactions",
+        },
+        {
+          "entry-level-score": 9,
+          domain: "Social Conformity",
+        },
+        {
+          "entry-level-score": 8,
+          domain: "Empathy",
+        },
+      ],
+    }
+    if (date == "29/04/2021") {
+      
+      return obj;
+    } else {
+      return obj;
     }
   };
 
-  const firstName = "Student B";
+  const firstName = "SN–001";
   const data = getData();
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -192,179 +332,55 @@ const DashboardDemo: FunctionComponent = () => {
           <Heading as="h2" size="md">
             {firstName}
           </Heading>
-          <Box>
-            <Heading as="h3" size="sm">
-              Behavior
-            </Heading>
-            {/* <Image
-              src="media/legend-long.png"
-              alt="Legend"
-              pr={`${yAxisWidthInPx}px`}
-            /> */}
-            <Center overflow="hidden" maxW="100%" fontSize="xs">
-              {/* <ResponsiveContainer width="100%" height={600}> */}
-                {/* <BarChart
-                  data={data}
-                  layout="vertical"
-                  margin={{
-                    top: 5,
-                    right: yAxisWidthInPx / 2,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <ReferenceLine x={0} stroke="blue" label="" />
-
-                  <YAxis dataKey="domain" type="category" orientation="right" />
-                  <XAxis type="number" domain={[-5, 5]} hide />
-                  <Tooltip />
-                  <Bar dataKey="entry-level-score" fill="#228be6">
-                    {data.map((entry, index) => {
-                      const opacity =
-                        entry["entry-level-score"] > 7 ||
-                        entry["entry-level-score"] < 3
-                          ? 1
-                          : (Math.abs(entry["entry-level-score"]) * 2) / 10;
-                      return <Cell key={index} fillOpacity={opacity} />;
-                    })}
-                    <ErrorBar
-                      dataKey="errors-entry-level"
-                      width={4}
-                      strokeWidth={3}
-                      stroke="purple"
-                      opacity={0.8}
-                      direction="x"
-                    />
-                  </Bar>
-                  <Bar dataKey="scaled-follow-up-score" fill="#228be6">
-                    {data.map((entry, index) => {
-                      return (
-                        <Cell
-                          key={index}
-                          fillOpacity={entry["color-intensity-follow-up"]}
-                        />
-                      );
-                    })}
-                    <ErrorBar
-                      dataKey="errors-follow-up"
-                      width={4}
-                      strokeWidth={3}
-                      stroke="green"
-                      opacity={0.8}
-                      direction="x"
-                    />
-                  </Bar>
-                </BarChart> */}
-              {/* </ResponsiveContainer> */}
-            </Center>
-          </Box>
           
-
           <br />
           <br />
-          <SimpleGrid columns={2} spacing={10}>
-            {data.map((entry, index) => {
-              const nrOfLevels = 20;
-              const colors = [
-                ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
-                ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
-              ];
-              let bgColor = (entry["entry-level-score"] > 3 || entry["entry-level-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
-              let result = (
-                <Box backgroundColor={bgColor} rounded="md"
-               m="2" p="5">
-                  <b>{entry["domain"]}</b>
-                  {/* <Box>Entry-level</Box> */}
-                  {/* <b>{entry["errors-entry-level"][0]} {entry["errors-entry-level"][1]} {(entry["entry-level-score"]+5)/10}</b> */}
-                  <GaugeChart
-                    id="gauge-chart-entry"
-                    colors={colors}
-                    nrOfLevels={nrOfLevels}
-                    textColor="464A4F"
-                    hideText={true}
-                    percent={(entry["entry-level-score"] + 5) / 10 + 0.01}
-                  />
-                </Box>
-              );
-          //     if (entry["errors-follow-up"]) {
-          //       let bgColor = (entry["scaled-follow-up-score"] > 3 || entry["scaled-follow-up-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
-          //       result = (
-          //         <Box>
-          //           {result}
-          //           <Box backgroundColor={bgColor} rounded="md"
-          //  m="2" p="5">
-          //             <Box>Follow-up</Box>
-          //             {/* <b>{entry["errors-follow-up"][0]} {entry["errors-follow-up"][1]} {(entry["scaled-follow-up-score"]+5)/10}</b> */}
-          //             {/* <GaugeChart
-          //               id="gauge-chart-follow-up"
-          //               arcsLength={getArcsLength(
-          //                 entry["errors-follow-up"],
-          //                 (entry["scaled-follow-up-score"] + 5) / 10
-          //               )}
-          //               colors={["#bddffd", "#0286fa", "#bddffd"]}
-          //               arcWidth={0.3}
-          //               textColor="464A4F"
-          //               hideText={true}
-          //               percent={
-          //                 (entry["scaled-follow-up-score"] + 5) / 10 + 0.01
-          //               }
-          //               arcPadding={0}
-          //             /> */}
-          //             <GaugeChart
-          //               id="gauge-chart-entry"
-          //               colors={colors}
-          //               nrOfLevels={nrOfLevels}
-          //               textColor="464A4F"
-          //               hideText={true}
-          //               percent={(entry["scaled-follow-up-score"] + 5) / 10 + 0.01}
-          //             />
-          //           </Box>
-          //         </Box>
-          //      );
-          //    }
-              return result;
-            })}
-          </SimpleGrid>
-          {/* <b>test test1 {data.length}</b> */}
-          {/* <ReactSpeedometer/> */}
-          {/* {data.map((entry, index) => {
-            //return <ReactSpeedometer/>
-            <b>test map</b>
-            })
-          } */}
-          {/* {data.map((entry, index) => {
-            console.log(entry)
-            return <div>
-              <b>{entry["errors-entry-level"][0]} {entry["errors-entry-level"][1]} {(entry["entry-level-score"]+5)/10}</b>
-              <ReactSpeedometer/>
-            </div>
-            })
-          } */}
-          {/* <b>test test1</b>
-          {data.map((entry, index) => {
-            var entryLevelGauge = <div>
-              <b>{entry["errors-entry-level"][0]} {entry["errors-entry-level"][1]} {(entry["entry-level-score"]+5)/10}</b>
-              <ReactSpeedometer  
-              segmentColors={["#FFC3FF", "#FF5FFF", "#FFC3FF"]} 
-              customSegmentStops={[0, (entry["entry-level-score"]+5)/10 - entry["errors-entry-level"][0],(entry["entry-level-score"]+5)/10 + entry["errors-entry-level"][1], 1]}
-              textColor="464A4F"
-              value={(entry["entry-level-score"]+5)/10} 
-              maxValue={1}
-            /></div>
-            if (entry["errors-follow-up"]) {
-              entryLevelGauge = <div>
-              {entryLevelGauge}
-              <b>{entry["errors-follow-up"][0]} {entry["errors-follow-up"][1]} {(entry["scaled-follow-up-score"]+5)/10}</b>
-              <ReactSpeedometer   
-                  customSegmentStops={[0, (entry["scaled-follow-up-score"]+5)/10 - entry["errors-follow-up"][0],(entry["scaled-follow-up-score"]+5)/10 + entry["errors-follow-up"][1], 1]}
-                  segmentColors={["#FFC3FF", "#FF5FFF", "#FFC3FF"]} 
-                  textColor="464A4F"
-                  value={(entry["scaled-follow-up-score"]+5)/10} 
-                  maxValue={1}
-                /> </div>
+          {Object.keys(data).map((category, index) => {
+            if (category != "Averages") {
+              let result = <Box>
+              <Heading as="h3" size="sm">
+              {category}
+              </Heading>
+              <GaugeChart
+                id="gauge-chart-entry"
+                colors={colors}
+                nrOfLevels={nrOfLevels}
+                textColor="464A4F"
+                hideText={true}
+                percent={(data["Averages"][category]) / 10 + 0.01}
+              />
+              {console.log("cat " + category)}
+              {console.log("avgs " + data["Averages"])}
+              {console.log("avg " + (data["Averages"][category]) / 10 + 0.01)}
+              <SimpleGrid columns={2} spacing={10}>
+                {data[category].map((entry, index) => {
+                  
+                  let bgColor = (entry["entry-level-score"] > 3 || entry["entry-level-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
+                  let result = (
+                    <Box rounded="md"
+                  m="2" p="5">
+                      <b>{entry["domain"]}</b>
+                      <GaugeChart
+                        id="gauge-chart-entry"
+                        colors={colors}
+                        nrOfLevels={nrOfLevels}
+                        textColor="464A4F"
+                        hideText={true}
+                        percent={(entry["entry-level-score"]) / 10 + 0.01}
+                      />
+                    </Box>
+                  );
+                  return result;
+                })}
+              </SimpleGrid>
+              <hr/>
+            </Box>
+            return result;
             }
-            return (entryLevelGauge)
-          })} */}
+            
+          })}
+          
+          
           <Button
             onClick={() => {
               setDate("29/04/2021");
