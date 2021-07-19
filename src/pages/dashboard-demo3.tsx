@@ -102,8 +102,8 @@ const DashboardDemo: FunctionComponent = () => {
     if (date == "29/04/2021") {
       return [
         {
-          "entry-level-score": 3,
-          domain: "activity",
+          "entry-level-score": 1,
+          "domain": "activity",
           "scaled-follow-up-score": 4,
           "color-intensity-follow-up": 0.9,
           "errors-entry-level": [1, 1],
@@ -111,14 +111,14 @@ const DashboardDemo: FunctionComponent = () => {
         },
         {
           "entry-level-score": -3,
-          domain: "habits and repetitive behaviours",
+          "domain": "habits and repetitive behaviours",
           "scaled-follow-up-score": 2,
           "color-intensity-follow-up": 0.3,
           "errors-entry-level": [2, 3],
           "errors-follow-up": [1, 4],
         },
         {
-          "entry-level-score": 4,
+          "entry-level-score": 2,
           domain: "impulsivity",
           "errors-entry-level": [0, 1],
         },
@@ -128,7 +128,7 @@ const DashboardDemo: FunctionComponent = () => {
           "errors-entry-level": [2, 2],
         },
         {
-          "entry-level-score": -2,
+          "entry-level-score": 0,
           domain: "substance use",
           "scaled-follow-up-score": -4,
           "color-intensity-follow-up": 1,
@@ -139,7 +139,7 @@ const DashboardDemo: FunctionComponent = () => {
     } else {
       return [
         {
-          "entry-level-score": 4,
+          "entry-level-score": 1,
           domain: "activity",
           "scaled-follow-up-score": 4,
           "color-intensity-follow-up": 1,
@@ -160,12 +160,12 @@ const DashboardDemo: FunctionComponent = () => {
           "errors-entry-level": [0, 1],
         },
         {
-          "entry-level-score": 3,
+          "entry-level-score": 0,
           domain: "risk taking",
           "errors-entry-level": [2, 2],
         },
         {
-          "entry-level-score": -3,
+          "entry-level-score": 2,
           domain: "substance use",
           "scaled-follow-up-score": -4,
           "color-intensity-follow-up": 1,
@@ -196,14 +196,14 @@ const DashboardDemo: FunctionComponent = () => {
             <Heading as="h3" size="sm">
               Behavior
             </Heading>
-            <Image
+            {/* <Image
               src="media/legend-long.png"
               alt="Legend"
               pr={`${yAxisWidthInPx}px`}
-            />
+            /> */}
             <Center overflow="hidden" maxW="100%" fontSize="xs">
-              <ResponsiveContainer width="100%" height={600}>
-                <BarChart
+              {/* <ResponsiveContainer width="100%" height={600}> */}
+                {/* <BarChart
                   data={data}
                   layout="vertical"
                   margin={{
@@ -254,24 +254,11 @@ const DashboardDemo: FunctionComponent = () => {
                       direction="x"
                     />
                   </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+                </BarChart> */}
+              {/* </ResponsiveContainer> */}
             </Center>
           </Box>
-          <Button
-            onClick={() => {
-              setDate("29/04/2021");
-            }}
-          >
-            29/04/2021
-          </Button>
-          <Button
-            onClick={() => {
-              setDate("02/05/2021");
-            }}
-          >
-            02/05/2021
-          </Button>
+          
 
           <br />
           <br />
@@ -279,13 +266,15 @@ const DashboardDemo: FunctionComponent = () => {
             {data.map((entry, index) => {
               const nrOfLevels = 20;
               const colors = [
-                ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
                 ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
+                ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
               ];
+              let bgColor = (entry["entry-level-score"] > 3 || entry["entry-level-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
               let result = (
-                <Box>
+                <Box backgroundColor={bgColor} rounded="md"
+               m="2" p="5">
                   <b>{entry["domain"]}</b>
-                  <Box>Entry-level</Box>
+                  {/* <Box>Entry-level</Box> */}
                   {/* <b>{entry["errors-entry-level"][0]} {entry["errors-entry-level"][1]} {(entry["entry-level-score"]+5)/10}</b> */}
                   <GaugeChart
                     id="gauge-chart-entry"
@@ -297,32 +286,42 @@ const DashboardDemo: FunctionComponent = () => {
                   />
                 </Box>
               );
-              if (entry["errors-follow-up"]) {
-                result = (
-                  <Box>
-                    {result}
-                    <Box>
-                      <Box>Follow-up</Box>
-                      {/* <b>{entry["errors-follow-up"][0]} {entry["errors-follow-up"][1]} {(entry["scaled-follow-up-score"]+5)/10}</b> */}
-                      <GaugeChart
-                        id="gauge-chart-follow-up"
-                        arcsLength={getArcsLength(
-                          entry["errors-follow-up"],
-                          (entry["scaled-follow-up-score"] + 5) / 10
-                        )}
-                        colors={["#bddffd", "#0286fa", "#bddffd"]}
-                        arcWidth={0.3}
-                        textColor="464A4F"
-                        hideText={true}
-                        percent={
-                          (entry["scaled-follow-up-score"] + 5) / 10 + 0.01
-                        }
-                        arcPadding={0}
-                      />
-                    </Box>
-                  </Box>
-                );
-              }
+          //     if (entry["errors-follow-up"]) {
+          //       let bgColor = (entry["scaled-follow-up-score"] > 3 || entry["scaled-follow-up-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
+          //       result = (
+          //         <Box>
+          //           {result}
+          //           <Box backgroundColor={bgColor} rounded="md"
+          //  m="2" p="5">
+          //             <Box>Follow-up</Box>
+          //             {/* <b>{entry["errors-follow-up"][0]} {entry["errors-follow-up"][1]} {(entry["scaled-follow-up-score"]+5)/10}</b> */}
+          //             {/* <GaugeChart
+          //               id="gauge-chart-follow-up"
+          //               arcsLength={getArcsLength(
+          //                 entry["errors-follow-up"],
+          //                 (entry["scaled-follow-up-score"] + 5) / 10
+          //               )}
+          //               colors={["#bddffd", "#0286fa", "#bddffd"]}
+          //               arcWidth={0.3}
+          //               textColor="464A4F"
+          //               hideText={true}
+          //               percent={
+          //                 (entry["scaled-follow-up-score"] + 5) / 10 + 0.01
+          //               }
+          //               arcPadding={0}
+          //             /> */}
+          //             <GaugeChart
+          //               id="gauge-chart-entry"
+          //               colors={colors}
+          //               nrOfLevels={nrOfLevels}
+          //               textColor="464A4F"
+          //               hideText={true}
+          //               percent={(entry["scaled-follow-up-score"] + 5) / 10 + 0.01}
+          //             />
+          //           </Box>
+          //         </Box>
+          //      );
+          //    }
               return result;
             })}
           </SimpleGrid>
@@ -366,6 +365,20 @@ const DashboardDemo: FunctionComponent = () => {
             }
             return (entryLevelGauge)
           })} */}
+          <Button
+            onClick={() => {
+              setDate("29/04/2021");
+            }}
+          >
+            29/04/2021
+          </Button>
+          <Button
+            onClick={() => {
+              setDate("02/05/2021");
+            }}
+          >
+            02/05/2021
+          </Button>
         </VStack>
       </MainContainer>
     </Fragment>
