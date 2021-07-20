@@ -6,10 +6,10 @@ import {
   Center,
   Heading,
   VStack,
-  Button,
   BoxProps,
   Image,
   SimpleGrid,
+  Button, ButtonGroup
 } from "@chakra-ui/react";
 import {
   BarChart,
@@ -482,6 +482,7 @@ const DashboardDemo: FunctionComponent = () => {
                 {data[category].map((entry, index) => {
                   
                   let bgColor = (entry["entry-level-score"] > 3 || entry["entry-level-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
+                  let placeholder = "    "
                   let result = (
                     <Box rounded="md"
                   m="2" p="5">
@@ -494,6 +495,13 @@ const DashboardDemo: FunctionComponent = () => {
                         hideText={true}
                         percent={(entry["entry-level-score"]) / 10 + 0.01}
                       />
+                    <Button colorScheme="teal" size="sm">
+                      i
+                    </Button>
+                    {placeholder}
+                    <Button colorScheme="teal" size="sm">
+                      g
+                    </Button>
                     </Box>
                   );
                   return result;
