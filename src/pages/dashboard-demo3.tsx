@@ -21,6 +21,12 @@ import {
   ResponsiveContainer,
   ErrorBar,
   ReferenceLine,
+  RadarChart,
+  PolarGrid,
+  PolarRadiusAxis,
+  PolarAngleAxis,
+  Radar,
+  Legend
 } from "recharts";
 import { quantize, interpolate } from "d3-interpolate";
 import GaugeChart from "react-gauge-chart";
@@ -107,16 +113,123 @@ const DashboardDemo: FunctionComponent = () => {
   const getData = () => {
     let obj = {
       "Averages": 
-        {"Behavior": 3.8,
-          "Cognition": 3,
-          "Learning": 4,
-          "Emotions": 4.6, 
-          "Health": 5.666666667, 
-          "Language": 5, 
-          "Personality": 6.875,
-          "Social Function": 6
+        {"Behavior": {
+            "avg": 4.25,
+            "abs-avg": 1.75
+          },
+          "Cognition": {
+            "avg": 3,
+            "abs-avg": 2.8
+          },
+          "Learning": {
+            "avg": 4,
+            "abs-avg": 1.8
+          },
+          "Emotions": {
+            "avg": 4.6,
+            "abs-avg": 1.2
+          }, 
+          "Health": {
+            "avg": 5.666666667,
+            "abs-avg": 1
+          }, 
+          "Language": {
+            "avg": 5,
+            "abs-avg": 2
+          }, 
+          "Personality": {
+            "avg": 6.875,
+            "abs-avg": 2.875
+          },
+          "Social Function": {
+            "avg": 6,
+            "abs-avg": 3
+          }
         }
       ,
+      "Averages-radar": [
+        {
+          "category": "Behavior",
+          "abs-avg": 0.75
+        },
+        {
+          "category": "Cognition",
+          "abs-avg": 2
+        },{
+          "category": "Learning",
+          "abs-avg": 1
+        },{
+          "category": "Emotions",
+          "abs-avg": 0.4
+        },{
+          "category": "Health",
+          "abs-avg": 0
+        },{
+          "category": "Language",
+          "abs-avg": 0
+        },{
+          "category": "Personality",
+          "abs-avg": 0
+        },{
+          "category": "Social Function",
+          "abs-avg": 0
+        },
+        {
+          "category": "Behavior ",
+          "abs-avg": 0
+        },
+        {
+          "category": "Cognition ",
+          "abs-avg": 0
+        },{
+          "category": "Learning ",
+          "abs-avg": 0
+        },{
+          "category": "Emotions ",
+          "abs-avg": 0
+        },{
+          "category": "Health ",
+          "abs-avg": 0.6666666667
+        },{
+          "category": "Language ",
+          "abs-avg": 0
+        },{
+          "category": "Personality ",
+          "abs-avg": 1.875
+        },{
+          "category": "Social Function ",
+          "abs-avg": 1
+        },
+      ]
+      ,
+      "Abs-averages": [
+        {
+          "category": "Behavior",
+          "abs-avg": 1.75
+        },
+        {
+          "category": "Cognition",
+          "abs-avg": 2.8
+        },{
+          "category": "Learning",
+          "abs-avg": 1.8
+        },{
+          "category": "Emotions",
+          "abs-avg": 1.2
+        },{
+          "category": "Health",
+          "abs-avg": 1
+        },{
+          "category": "Language",
+          "abs-avg": 2
+        },{
+          "category": "Personality",
+          "abs-avg": 2.875
+        },{
+          "category": "Social Function",
+          "abs-avg": 3
+        },
+      ],
       "Behavior": [
         {
           "entry-level-score": 6,
@@ -332,11 +445,27 @@ const DashboardDemo: FunctionComponent = () => {
           <Heading as="h2" size="md">
             {firstName}
           </Heading>
+
+          <RadarChart outerRadius={190} width={730} height={500} data={data["Averages-radar"]}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="category" />
+            <PolarRadiusAxis angle={30} domain={[0, 5]}/>
+            <Radar dataKey="abs-avg" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          </RadarChart>
+
+          <RadarChart outerRadius={190} width={730} height={500} data={data["Abs-averages"]}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="category" />
+            <PolarRadiusAxis angle={30} domain={[0, 5]}/>
+            <Radar dataKey="abs-avg" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          </RadarChart>
           
           <br />
           <br />
           {Object.keys(data).map((category, index) => {
-            if (category != "Averages") {
+            
+            if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
+
               let result = <Box>
               <Heading as="h3" size="sm">
               {category}
@@ -347,11 +476,8 @@ const DashboardDemo: FunctionComponent = () => {
                 nrOfLevels={nrOfLevels}
                 textColor="464A4F"
                 hideText={true}
-                percent={(data["Averages"][category]) / 10 + 0.01}
+                percent={(data["Averages"][category]["avg"]) / 10 + 0.01}
               />
-              {console.log("cat " + category)}
-              {console.log("avgs " + data["Averages"])}
-              {console.log("avg " + (data["Averages"][category]) / 10 + 0.01)}
               <SimpleGrid columns={2} spacing={10}>
                 {data[category].map((entry, index) => {
                   
