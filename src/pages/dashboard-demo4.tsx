@@ -67,6 +67,9 @@ const colors = [
   ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
   ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
 ];
+const colorsUnipolar = [
+  ...quantize(interpolate("#fbeafe", "#d603fb"), nrOfLevels / 2),
+];
 
 const GradientBar: FunctionComponent<GradientBarProps> = ({
   p,
@@ -203,6 +206,16 @@ const DashboardDemo: FunctionComponent = () => {
         "Language": 5, 
         "Personality": 6.875,
         "Social Function": 6
+      },
+      "Abs-averages-by-category": {
+        "Behavior": 1.75,
+        "Cognition": 2.8,
+        "Learning": 1.8,
+        "Emotions": 1.2, 
+        "Health": 1, 
+        "Language": 2, 
+        "Personality": 2.875,
+        "Social Function": 3
       },
       "Behavior": [
         {
@@ -420,7 +433,7 @@ const DashboardDemo: FunctionComponent = () => {
             {firstName}
           </Heading>
 
-          <RadarChart outerRadius={190} width={730} height={500} data={data["Averages-radar"]}>
+          <RadarChart outerRadius={190} width={730} height={500} data={data["Abs-averages"]}>
             <PolarGrid />
             <PolarAngleAxis dataKey="category" />
             <PolarRadiusAxis angle={30} domain={[0, 5]}/>
@@ -431,7 +444,7 @@ const DashboardDemo: FunctionComponent = () => {
           <br />
           {Object.keys(data).map((category, index) => {
             
-            if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
+            if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar" && category != "Abs-averages-by-category") {
 
               let result = <Box>
               <Heading as="h3" size="sm">
@@ -439,11 +452,11 @@ const DashboardDemo: FunctionComponent = () => {
               </Heading>
               <GaugeChart
                 id="gauge-chart-entry"
-                colors={colors}
+                colors={colorsUnipolar}
                 nrOfLevels={nrOfLevels}
                 textColor="464A4F"
                 hideText={true}
-                percent={(data["Averages"][category]) / 10 + 0.01}
+                percent={(data["Abs-averages-by-category"][category]) / 5 + 0.01}
               />
               <SimpleGrid columns={2} spacing={10}>
                 {data[category].map((entry, index) => {
