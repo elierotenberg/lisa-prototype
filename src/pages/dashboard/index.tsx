@@ -1,9 +1,10 @@
 import { Center, Spinner } from "@chakra-ui/react";
 import Head from "next/head";
-import { ComponentType, Fragment } from "react";
+import React, { ComponentType, Fragment } from "react";
 import { MainContainer } from "../../components/MainContainer/MainContainer";
 import { withAppStateContextProvider } from "../../components/withAppStateContextProvider/withAppStateContextProvider";
 import { DashboardHome } from "../../components/DashboardHome/DashboardHome";
+import { MainNavBar } from "../../components/MainNavBar/MainNavBar";
 
 const DashboardIndex: ComponentType = withAppStateContextProvider(
   () => (
@@ -11,6 +12,7 @@ const DashboardIndex: ComponentType = withAppStateContextProvider(
       <Head>
         <title>Dashboard</title>
       </Head>
+      <MainNavBar />
       <MainContainer>
         <DashboardHome />
       </MainContainer>

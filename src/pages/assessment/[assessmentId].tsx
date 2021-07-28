@@ -14,6 +14,7 @@ import { useAppStateContext } from "../../contexts/AppStateContext";
 import { withAppStateContextProvider } from "../../components/withAppStateContextProvider/withAppStateContextProvider";
 import { useRouter } from "next/router";
 import { MainContainer } from "../../components/MainContainer/MainContainer";
+import { MainNavBar } from "../../components/MainNavBar/MainNavBar";
 
 type StaticProps = {
   readonly assessment: Assessment;
@@ -47,6 +48,7 @@ const AssessmentId: ComponentType<StaticProps> = withAppStateContextProvider<Sta
         <Head>
           <title>{assessment.title}</title>
         </Head>
+        <MainNavBar />
         <MainContainer>
           {!appState ? (
             <Center>

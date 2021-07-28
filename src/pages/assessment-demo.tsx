@@ -4,6 +4,7 @@ import { Slider, SliderThumb, SliderTrack } from "@chakra-ui/slider";
 import Head from "next/head";
 import React, { Fragment, FunctionComponent } from "react";
 import { MainContainer } from "../components/MainContainer/MainContainer";
+import { MainNavBar } from "../components/MainNavBar/MainNavBar";
 
 type AssessmentQuestion = {
   readonly title: string;
@@ -41,6 +42,7 @@ const AssessmentDemo: FunctionComponent = () => {
       <Head>
         <title>Assessment Demo</title>
       </Head>
+      <MainNavBar />
       <MainContainer>
         <VStack alignItems="flex-start" spacing={4}>
           {questions.map(({ title, info, labels }, key) => (

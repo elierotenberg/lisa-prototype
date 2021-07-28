@@ -2,8 +2,9 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 import { List, ListItem, VStack } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { Fragment, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent } from "react";
 import { MainContainer } from "../../components/MainContainer/MainContainer";
+import { MainNavBar } from "../../components/MainNavBar/MainNavBar";
 import { NavLink } from "../../components/NavLink/NavLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { Assessment, loadAssessments } from "../../lib/Assessment";
@@ -17,6 +18,7 @@ const AssessmentIndex: FunctionComponent<StaticProps> = ({ assessments }) => (
     <Head>
       <title>Assessments</title>
     </Head>
+    <MainNavBar />
     <MainContainer>
       <VStack alignItems="flex-start">
         <PageTitle>Assessments</PageTitle>

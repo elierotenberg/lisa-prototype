@@ -1,12 +1,13 @@
 import { Center, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ComponentType, Fragment } from "react";
+import React, { ComponentType, Fragment } from "react";
 import { withAppStateContextProvider } from "../../../components/withAppStateContextProvider/withAppStateContextProvider";
 import { withAssessmentsContexProvider } from "../../../components/withAssessmentsContextProvider/withAssessmentsContextProvider";
 import { MainContainer } from "../../../components/MainContainer/MainContainer";
 import { LearnerProfile } from "../../../components/LearnerProfile/LearnerProfile";
 import { withStrategiesContextProvider } from "../../../components/withStrategiesContextProvider/withStrategiesContextProvider";
+import { MainNavBar } from "../../../components/MainNavBar/MainNavBar";
 
 const LearnerId: ComponentType = withAssessmentsContexProvider(
   withStrategiesContextProvider(
@@ -21,6 +22,7 @@ const LearnerId: ComponentType = withAssessmentsContexProvider(
             <Head>
               <title>{learnerId}</title>
             </Head>
+            <MainNavBar />
             <MainContainer>
               {learnerId ? (
                 <LearnerProfile
