@@ -7,7 +7,7 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
-import {
+import React, {
   Fragment,
   FunctionComponent,
   useCallback,
@@ -31,6 +31,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
+import { MainNavBar } from "../components/MainNavBar/MainNavBar";
 
 const domains = `
 Specific phobias 
@@ -130,6 +131,7 @@ const DashboardDemo: FunctionComponent = () => {
       <Head>
         <title>Dashboard Demo</title>
       </Head>
+      <MainNavBar />
       <MainContainer>
         <VStack spacing={4} alignItems="stretch">
           <Button onClick={randomize}>Randomize</Button>
