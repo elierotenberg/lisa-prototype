@@ -62,7 +62,7 @@ type GradientBarProps = BoxProps & {
   readonly barHeight: string;
 };
 
-const nrOfLevels = 20;
+const nrOfLevels = 80;
 const colors = [
   ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
   ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
@@ -420,10 +420,10 @@ const DashboardDemo: FunctionComponent = () => {
             {firstName}
           </Heading>
 
-          <RadarChart outerRadius={190} width={730} height={500} data={data["Averages-radar"]}>
-            <PolarGrid />
+          <RadarChart width={730} height={500} data={data["Averages-radar"]}>
+            <PolarGrid innerRadius={10}/>
             <PolarAngleAxis dataKey="category" />
-            <PolarRadiusAxis angle={30} domain={[0, 5]}/>
+            <PolarRadiusAxis angle={30} domain={[0, 5]}  tick={false} axisLine={false}/>
             <Radar dataKey="abs-avg" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
           
@@ -437,6 +437,7 @@ const DashboardDemo: FunctionComponent = () => {
               <Heading as="h3" size="sm">
               {category}
               </Heading>
+              
               <GaugeChart
                 id="gauge-chart-entry"
                 colors={colors}
@@ -445,7 +446,7 @@ const DashboardDemo: FunctionComponent = () => {
                 hideText={true}
                 percent={(data["Averages"][category]) / 10 + 0.01}
               />
-              <SimpleGrid columns={2} spacing={10}>
+              <SimpleGrid columns={2} spacing={0}>
                 {data[category].map((entry, index) => {
                   
                   let bgColor = (entry["entry-level-score"] > 3 || entry["entry-level-score"] < -3) ? "#e1f4fc" : "#FFFFFF"
@@ -453,7 +454,16 @@ const DashboardDemo: FunctionComponent = () => {
                   let result = (
                     <Box rounded="md"
                   m="2" p="5">
-                      <b>{entry["domain"]}</b>
+                      <b>{entry["domain"]}</b> 
+                      {placeholder}
+                      {placeholder}
+                      <Button colorScheme="cyan" size="xs" variant="outline">
+                        i
+                      </Button>
+                      {placeholder}
+                      <Button colorScheme="cyan" size="xs" variant="outline">
+                        g
+                      </Button>
                       <GaugeChart
                         id="gauge-chart-entry"
                         colors={colors}
@@ -462,13 +472,7 @@ const DashboardDemo: FunctionComponent = () => {
                         hideText={true}
                         percent={(entry["entry-level-score"]) / 10 + 0.01}
                       />
-                    <Button colorScheme="pink" size="sm" variant="outline">
-                      i
-                    </Button>
-                    {placeholder}
-                    <Button colorScheme="pink" size="sm" variant="outline">
-                      g
-                    </Button>
+                    
                     </Box>
                   );
                   return result;
