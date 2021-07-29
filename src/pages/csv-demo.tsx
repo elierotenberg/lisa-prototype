@@ -5,11 +5,17 @@ import {
   AlertTitle,
   Flex,
   VStack,
+  Box,
+  Heading,
+  SimpleGrid,
+  Button
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { ChangeEvent } from "react";
 import { Fragment, FunctionComponent, useCallback, useState } from "react";
 import { MainContainer } from "../components/MainContainer/MainContainer";
+import GaugeChart from "react-gauge-chart";
+import { quantize, interpolate } from "d3-interpolate";
 
 import Papa from "papaparse";
 
@@ -19,12 +25,70 @@ const domainsByCategory = {
   "Behavior": ["habits and repetitive behaviours", "risk taking"],
   "Cognition": ["attention", "planning and organization"],
 }
+const nrOfLevels = 20;
+const colors = [
+  ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
+  ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
+];
 
 const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
   data,
 }) => {
   // Do visualization here
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  console.log("data", data)
+  return <Box>
+    {Object.keys(data).map((category, index) => {
+    
+    if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
+
+      console.log("category", category)
+      console.log("data categroy", data[category])
+      console.log("keys", Object.keys(data))
+      let result = <Box>
+        <Heading as="h3" size="sm">
+        {category}
+        </Heading>
+
+        <SimpleGrid columns={2} spacing={0}>
+          {data[category].map((entry, index) => {
+            
+            let bgColor = (entry["score"] > 3 || entry["score"] < -3) ? "#e1f4fc" : "#FFFFFF"
+            let placeholder = "    "
+            let result = (
+              <Box rounded="md"
+            m="2" p="5">
+                <b>{entry["domain"]}</b> 
+                {placeholder}
+                {placeholder}
+                <Button colorScheme="cyan" size="xs" variant="outline">
+                  i
+                </Button>
+                {placeholder}
+                <Button colorScheme="cyan" size="xs" variant="outline">
+                  g
+                </Button>
+                <GaugeChart
+                  id="gauge-chart-entry"
+                  colors={colors}
+                  nrOfLevels={nrOfLevels}
+                  textColor="464A4F"
+                  hideText={true}
+                  percent={(entry["score"]) / 10 + 0.01}
+                />
+              
+              </Box>
+            );
+            return result;
+          })}
+        </SimpleGrid>
+        <hr/>
+      </Box>
+    return result;
+    }
+    
+  })}
+    <pre>{JSON.stringify(data, null, 2)}</pre>
+  </Box>;
 };
 
 const CsvDemo: FunctionComponent = () => {
@@ -90,19 +154,18 @@ const transformData = (data: unknown[]) => {
   // parse value
   cleanedData.map(item => item.push(item[10].split(": ")[1]))
 
-  var result = []
+  var result = {}
   Object.keys(domainsByCategory).forEach(cateogryName => {
-    var categoryObject = {}
-    categoryObject[cateogryName] = []
+    var cateoryArray = []
     domainsByCategory[cateogryName].forEach(domainName => {
       var score = getScoreByDomain(cleanedData, domainName)
       var domainObject = {
         "domain": domainName,
         "score": score
       }
-      categoryObject[cateogryName].push(domainObject)
+      cateoryArray.push(domainObject)
     })
-    result.push(categoryObject)
+    result[cateogryName] = cateoryArray
   })
   
   // don't forget bullying

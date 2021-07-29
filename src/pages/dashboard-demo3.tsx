@@ -62,7 +62,7 @@ type GradientBarProps = BoxProps & {
   readonly barHeight: string;
 };
 
-const nrOfLevels = 80;
+const nrOfLevels = 20;
 const colors = [
   ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
   ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
