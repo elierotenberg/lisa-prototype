@@ -171,8 +171,24 @@ const DashboardDemo: FunctionComponent = () => {
       ],
       "Abs-averages": [
         {
+          "category": "Language",
+          "abs-avg": 2
+        },
+        {
+          "category": "Social Function",
+          "abs-avg": 3
+        },
+        {
           "category": "Behavior",
           "abs-avg": 1.75
+        },
+        {
+          "category": "Emotions",
+          "abs-avg": 1.2
+        },
+        {
+          "category": "Personality",
+          "abs-avg": 2.875
         },
         {
           "category": "Cognition",
@@ -181,20 +197,8 @@ const DashboardDemo: FunctionComponent = () => {
           "category": "Learning",
           "abs-avg": 1.8
         },{
-          "category": "Emotions",
-          "abs-avg": 1.2
-        },{
           "category": "Health",
           "abs-avg": 1
-        },{
-          "category": "Language",
-          "abs-avg": 2
-        },{
-          "category": "Personality",
-          "abs-avg": 2.875
-        },{
-          "category": "Social Function",
-          "abs-avg": 3
         },
       ],
       "Averages": {
@@ -208,14 +212,14 @@ const DashboardDemo: FunctionComponent = () => {
         "Social Function": 6
       },
       "Abs-averages-by-category": {
+        "Language": 2, 
+        "Social Function": 3,
         "Behavior": 1.75,
+        "Emotions": 1.2, 
+        "Personality": 2.875,
         "Cognition": 2.8,
         "Learning": 1.8,
-        "Emotions": 1.2, 
         "Health": 1, 
-        "Language": 2, 
-        "Personality": 2.875,
-        "Social Function": 3
       },
       "Behavior": [
         {
