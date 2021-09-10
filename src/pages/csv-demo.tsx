@@ -8,7 +8,8 @@ import {
   Box,
   Heading,
   SimpleGrid,
-  Button
+  Button,
+  Link
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { ChangeEvent } from "react";
@@ -63,13 +64,15 @@ const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
                 <b>{entry["domain"]}</b> 
                 {placeholder}
                 {placeholder}
-                <Button colorScheme="cyan" size="xs" variant="outline">
+                <Button colorScheme="cyan" size="xs" variant="outline"> 
                   i
                 </Button>
                 {placeholder}
-                <Button colorScheme="cyan" size="xs" variant="outline">
-                  g
-                </Button>
+                <Link href="test-guide.pdf" isExternal >
+                  <Button colorScheme="cyan" size="xs" variant="outline" >
+                    g
+                  </Button>
+                </Link>
                 <GaugeChart
                   id="gauge-chart-entry"
                   colors={colors}
