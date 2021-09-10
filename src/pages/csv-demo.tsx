@@ -18,12 +18,19 @@ import GaugeChart from "react-gauge-chart";
 import { quantize, interpolate } from "d3-interpolate";
 
 import Papa from "papaparse";
+import { domain } from "process";
 
 var student = ""
 
 const domainsByCategory = {
-  "Behavior": ["habits and repetitive behaviours", "risk taking"],
-  "Cognition": ["attention", "planning and organization"],
+  "Language": ["language (including gestures)", "speech quantity", "speech articulation"],
+  "Social function": ["cooperativeness", "following rules", "bullying", "social interactions", "social conformity", "empathy"],
+  "Behavior": ["habits and repetitive behaviours", "risk taking", "activity", "impulsivity"],
+  "Emotions": ["irritability", "mood", "emotional reactivity", "stress level", "worries"],
+  "Personality": ["temperament", "confidence", "creativity","responsibility", "integrity","perseverance","sexual identity","sexual behavior"],
+  "Cognition": ["attention", "planning and organization", "memory","abstraction / generalization","thinking (processing) speed"],
+  "Learning": ["reading", "writing", "mathematics","learning","academic performance"],
+  "Health": ["diet","energy levels","gross motor skills","fine motor skills","complaints of pain","hygiene"]
 }
 const nrOfLevels = 20;
 const colors = [
@@ -35,15 +42,11 @@ const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
   data,
 }) => {
   // Do visualization here
-  console.log("data", data)
   return <Box>
     {Object.keys(data).map((category, index) => {
     
     if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
 
-      console.log("category", category)
-      console.log("data categroy", data[category])
-      console.log("keys", Object.keys(data))
       let result = <Box>
         <Heading as="h3" size="sm">
         {category}
@@ -139,13 +142,12 @@ const CsvDemo: FunctionComponent = () => {
 
 const transformData = (data: unknown[]) => {
   var cleanedData = data
-  
+
   // remove headers
   cleanedData.shift()
 
   // get student ID
-  console.log(cleanedData[0])
-  student = cleanedData[0][10]
+  student = cleanedData[0][10].split(": ")[1]
   
   // only keep last assessment
   const latestEndTime = cleanedData[0][3]
@@ -155,25 +157,27 @@ const transformData = (data: unknown[]) => {
   cleanedData.map(item => item.push(item[10].split(": ")[1]))
 
   var result = {}
-  Object.keys(domainsByCategory).forEach(cateogryName => {
-    var cateoryArray = []
-    domainsByCategory[cateogryName].forEach(domainName => {
+  Object.keys(domainsByCategory).forEach(categoryName => {
+    var categoryArray = []
+    domainsByCategory[categoryName].forEach(domainName => {
       var score = getScoreByDomain(cleanedData, domainName)
       var domainObject = {
         "domain": domainName,
         "score": score
       }
-      cateoryArray.push(domainObject)
+      categoryArray.push(domainObject)
     })
-    result[cateogryName] = cateoryArray
+    result[categoryName] = categoryArray
   })
   
-  // don't forget bullying
   return result
 }
 
 const getScoreByDomain = (data: unknown[], domainName) => {
-  var score = data.filter(item => item[11].toLowerCase() == domainName)[0][15]
+  var score = -1
+  if (data.filter(item => item[11].trim().toLowerCase() == domainName).length > 0) {
+    score = data.filter(item => item[11].trim().toLowerCase() == domainName)[0][15]
+  }
   return score
 }
 
