@@ -11,6 +11,23 @@ import {
   Button,
   Link
 } from "@chakra-ui/react";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  ErrorBar,
+  ReferenceLine,
+  RadarChart,
+  PolarGrid,
+  PolarRadiusAxis,
+  PolarAngleAxis,
+  Radar,
+  Legend
+} from "recharts";
 import Head from "next/head";
 import { ChangeEvent } from "react";
 import { Fragment, FunctionComponent, useCallback, useState } from "react";
@@ -47,6 +64,14 @@ const CsvDemoVisualization: FunctionComponent<{ dataPerDomain: unknown[], averag
 }) => {
   // Do visualization here
   return <Box>
+
+    <RadarChart width={730} height={500} data={averagesForRadar}>
+      <PolarGrid />
+      <PolarAngleAxis dataKey="category" />
+      <PolarRadiusAxis angle={30} domain={[0, 5]} tick={false} axisLine={false}/>
+      <Radar dataKey="abs-avg" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+    </RadarChart>
+
     {Object.keys(dataPerDomain).map((category, index) => {
     
     if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
@@ -247,17 +272,26 @@ const transformAveragesForRadar = (data: unknown[]) => {
   // parse value
   cleanedData.map(item => item.push(item[10].split(": ")[1]))
 
-  var result = {}
+  var result = []
   Object.keys(domainsByCategory).forEach(categoryName => {
     var sumScorePerCategory = 0
     var nbOfDomainsPerCategory = 0
     domainsByCategory[categoryName].forEach(domainName => {
       var score = getScoreByDomain(cleanedData, domainName)
-      sumScorePerCategory += score
+      console.log("score ", score)
+      sumScorePerCategory += Math.abs(parseFloat(score)-5)
       nbOfDomainsPerCategory += 1
     })
-    result[categoryName] = sumScorePerCategory / nbOfDomainsPerCategory
+    console.log("sum ", sumScorePerCategory, " nb ", nbOfDomainsPerCategory)
+    var absAvg = sumScorePerCategory / nbOfDomainsPerCategory
+    var categoryObject = {
+      "category": categoryName,
+      "abs-avg": absAvg
+    }
+    result.push(categoryObject)
   })
+
+  console.log(result)
 
   return result
 }
