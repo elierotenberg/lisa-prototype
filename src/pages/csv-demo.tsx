@@ -139,7 +139,6 @@ const CsvDemoVisualization: FunctionComponent<{ dataPerDomain: unknown[], averag
     }
     
   })}
-    <pre>{JSON.stringify(dataPerDomain, null, 2)}</pre>
   </Box>;
 };
 
