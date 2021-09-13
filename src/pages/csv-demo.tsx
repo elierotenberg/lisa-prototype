@@ -26,7 +26,7 @@ var student = ""
 const domainsByCategory = {
   "Language": ["language (including gestures)", "speech quantity", "speech articulation"],
   "Social function": ["cooperativeness", "following rules", "bullying", "social interactions", "social conformity", "empathy"],
-  "Behavior": ["habits and repetitive behaviours", "risk taking", "activity", "impulsivity"],
+  "Behavior": ["habits and repetitive behavior", "risk taking", "activity", "impulsivity"],
   "Emotions": ["irritability", "mood", "emotional reactivity", "stress level", "worries"],
   "Personality": ["temperament", "confidence", "creativity","responsibility", "integrity","perseverance","sexual identity","sexual behavior"],
   "Cognition": ["attention", "planning and organization", "memory","abstraction / generalization","thinking (processing) speed"],
@@ -38,13 +38,16 @@ const colors = [
   ...quantize(interpolate("#0286fa", "#bddffd"), nrOfLevels / 2),
   ...quantize(interpolate("#bddffd", "#0286fa"), nrOfLevels / 2),
 ];
+const colorsUnipolar = [
+  ...quantize(interpolate("#fbeafe", "#d603fb"), nrOfLevels / 2),
+];
 
-const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
-  data,
+const CsvDemoVisualization: FunctionComponent<{ dataPerDomain: unknown[], averagesForRadar: unknown[], averagesForSpeedometers: unknown[] }> = ({
+  dataPerDomain, averagesForRadar, averagesForSpeedometers
 }) => {
   // Do visualization here
   return <Box>
-    {Object.keys(data).map((category, index) => {
+    {Object.keys(dataPerDomain).map((category, index) => {
     
     if (category != "Averages" && category != "Abs-averages" && category != "Averages-radar") {
 
@@ -53,8 +56,17 @@ const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
         {category}
         </Heading>
 
+        <GaugeChart
+          id="gauge-chart-entry"
+          colors={colorsUnipolar}
+          nrOfLevels={nrOfLevels}
+          textColor="464A4F"
+          hideText={true}
+          percent={(averagesForSpeedometers[category]) / 5 + 0.01}
+        />
+
         <SimpleGrid columns={2} spacing={0}>
-          {data[category].map((entry, index) => {
+          {dataPerDomain[category].map((entry, index) => {
             
             let bgColor = (entry["score"] > 3 || entry["score"] < -3) ? "#e1f4fc" : "#FFFFFF"
             let placeholder = "    "
@@ -93,7 +105,7 @@ const CsvDemoVisualization: FunctionComponent<{ data: unknown[] }> = ({
     }
     
   })}
-    <pre>{JSON.stringify(data, null, 2)}</pre>
+    <pre>{JSON.stringify(dataPerDomain, null, 2)}</pre>
   </Box>;
 };
 
@@ -136,7 +148,7 @@ const CsvDemo: FunctionComponent = () => {
               ))}
             </Flex>
           )}
-          {result?.data && <CsvDemoVisualization data={transformData(result.data)} />}
+          {result?.data && <CsvDemoVisualization dataPerDomain={transformData(result.data)} averagesForRadar={transformAveragesForRadar(result.data)} averagesForSpeedometers={transformAveragesForSpeedometers(result.data)}/>}
         </VStack>
       </MainContainer>
     </Fragment>
@@ -182,6 +194,72 @@ const getScoreByDomain = (data: unknown[], domainName) => {
     score = data.filter(item => item[11].trim().toLowerCase() == domainName)[0][15]
   }
   return score
+}
+
+const transformAveragesForSpeedometers = (data: unknown[]) => {
+  var cleanedData = data
+
+  // remove headers
+  cleanedData.shift()
+
+  // get student ID
+  student = cleanedData[0][10].split(": ")[1]
+  
+  // only keep last assessment
+  const latestEndTime = cleanedData[0][3]
+  cleanedData = cleanedData.filter(item => item[3] == latestEndTime);
+  
+  // parse value
+  cleanedData.map(item => item.push(item[10].split(": ")[1]))
+
+  var result = {}
+  Object.keys(domainsByCategory).forEach(categoryName => {
+    var sumScorePerCategory = 0
+    var nbOfDomainsPerCategory = 0
+    domainsByCategory[categoryName].forEach(domainName => {
+      var score = getScoreByDomain(cleanedData, domainName)
+      console.log("score ", score)
+      sumScorePerCategory += Math.abs(parseFloat(score)-5)
+      nbOfDomainsPerCategory += 1
+    })
+    console.log("sum ", sumScorePerCategory, " nb ", nbOfDomainsPerCategory)
+    result[categoryName] = sumScorePerCategory / nbOfDomainsPerCategory
+  })
+
+  console.log(result)
+
+  return result
+}
+
+const transformAveragesForRadar = (data: unknown[]) => {
+  var cleanedData = data
+
+  // remove headers
+  cleanedData.shift()
+
+  // get student ID
+  student = cleanedData[0][10].split(": ")[1]
+  
+  // only keep last assessment
+  const latestEndTime = cleanedData[0][3]
+  cleanedData = cleanedData.filter(item => item[3] == latestEndTime);
+  
+  // parse value
+  cleanedData.map(item => item.push(item[10].split(": ")[1]))
+
+  var result = {}
+  Object.keys(domainsByCategory).forEach(categoryName => {
+    var sumScorePerCategory = 0
+    var nbOfDomainsPerCategory = 0
+    domainsByCategory[categoryName].forEach(domainName => {
+      var score = getScoreByDomain(cleanedData, domainName)
+      sumScorePerCategory += score
+      nbOfDomainsPerCategory += 1
+    })
+    result[categoryName] = sumScorePerCategory / nbOfDomainsPerCategory
+  })
+
+  return result
 }
 
 export default CsvDemo;
