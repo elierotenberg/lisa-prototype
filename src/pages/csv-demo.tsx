@@ -9,24 +9,22 @@ import {
   Heading,
   SimpleGrid,
   Button,
-  Link
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
 } from "@chakra-ui/react";
 import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  ErrorBar,
-  ReferenceLine,
   RadarChart,
   PolarGrid,
   PolarRadiusAxis,
   PolarAngleAxis,
   Radar,
-  Legend
 } from "recharts";
 import Head from "next/head";
 import { ChangeEvent } from "react";
@@ -101,9 +99,20 @@ const CsvDemoVisualization: FunctionComponent<{ dataPerDomain: unknown[], averag
                 <b>{entry["domain"]}</b> 
                 {placeholder}
                 {placeholder}
-                <Button colorScheme="cyan" size="xs" variant="outline"> 
-                  i
-                </Button>
+                <Popover>
+                  <PopoverTrigger>
+                    <Button colorScheme="cyan" size="xs" variant="outline"  >
+                      i
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
                 {placeholder}
                 <Link href="test-guide.pdf" isExternal >
                   <Button colorScheme="cyan" size="xs" variant="outline" >
