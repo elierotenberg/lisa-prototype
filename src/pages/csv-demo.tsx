@@ -109,7 +109,33 @@ const CsvDemoVisualization: FunctionComponent<{ dataPerDomain: unknown[], averag
                     <PopoverArrow />
                     <PopoverCloseButton />
                     <PopoverBody>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                      <h3>
+                          <b>Information:</b>
+                      </h3>
+                      <p>
+                        &emsp;Many people have habits and repetitive behaviors.  In fact, they are often quite adaptive as they help us get through routine tasks quickly and efficiently.  However, habits and repetitive behaviors occur along a spectrum.  Some individuals are unable to develop these good habits.  This forces them to recreate each routine every time they take on a task.  This leads to errors and incredible inefficiency.  At the other end of the spectrum are individuals who have very many and/or very rigid habits and repetitive behaviors. When the habits are rigid, they "must" use them even when they are not helpful.  And, when there are too many, they interfere with the individual's ability to be flexible and adapt to their environment.
+                      </p>
+                      <h3>
+                        <b>Examples:</b>
+                      </h3>
+                      <h4>
+                        <b>&emsp;Typical:</b>
+                      </h4>
+                      <p>
+                        &emsp;&emsp;When Jacques gets ready to leave the house, he makes sure he checks carefully to be sure that he has his wallet, money and keys. When he gets in the car, he carefully makes sure that his seat and mirrors are appropriately adjusted, and his seatbelt is on before he starts the car and begins driving.
+                      </p>
+                      <h4>
+                        <b>&emsp;Anchor 1:</b>
+                      </h4>
+                      <p>
+                        &emsp;&emsp;Francoise has no routines for leaving the house.  She often forgets important items, including her keys.  She has locked herself out of the house many times.  She also forgets to put on  her seatbelt and has been ticketed multiple times for this violation.
+                      </p>
+                      <h4>
+                        <b>&emsp;Anchor 2:</b>
+                      </h4>
+                      <p>
+                        &emsp;&emsp;Etienne has a list that he must check before he leaves the house.  He checks carefully, exactly 10 times to be sure that he has his wallet, keys, and money.  If he is missing something, he must start his checking all over again.  It can sometimes take him an hour to be prepared to leave the house.  This happens so often that he frequently misses appointments and is late for work.  On some days, he must repeat the patterns so many times that he cannot leave the house at all. 
+                      </p>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
