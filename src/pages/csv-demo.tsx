@@ -379,9 +379,6 @@ const transformAveragesForSpeedometers = (
 ): Record<string, number> => {
   let cleanedData = data;
 
-  // remove headers
-  cleanedData.shift();
-
   // get student ID
   student = cleanedData[0][10].split(": ")[1];
 
@@ -398,15 +395,11 @@ const transformAveragesForSpeedometers = (
     let nbOfDomainsPerCategory = 0;
     domainsByCategory[categoryName].forEach((domainName) => {
       const score = getScoreByDomain(cleanedData, domainName);
-      console.log("score ", score);
       sumScorePerCategory += Math.abs(score - 5);
       nbOfDomainsPerCategory += 1;
-    });
-    console.log("sum ", sumScorePerCategory, " nb ", nbOfDomainsPerCategory);
+    }); 
     result[categoryName] = sumScorePerCategory / nbOfDomainsPerCategory;
   });
-
-  console.log(result);
 
   return result;
 };
@@ -419,9 +412,6 @@ type CategoryResult = CategoryResultItem[];
 
 const transformAveragesForRadar = (data: string[][]): CategoryResult => {
   let cleanedData = data;
-
-  // remove headers
-  cleanedData.shift();
 
   // get student ID
   student = cleanedData[0][10].split(": ")[1];
@@ -439,11 +429,9 @@ const transformAveragesForRadar = (data: string[][]): CategoryResult => {
     let nbOfDomainsPerCategory = 0;
     domainsByCategory[categoryName].forEach((domainName) => {
       const score = getScoreByDomain(cleanedData, domainName);
-      console.log("score ", score);
       sumScorePerCategory += Math.abs(score - 5);
       nbOfDomainsPerCategory += 1;
     });
-    console.log("sum ", sumScorePerCategory, " nb ", nbOfDomainsPerCategory);
     const absAvg = sumScorePerCategory / nbOfDomainsPerCategory;
     const categoryObject = {
       category: categoryName,
@@ -451,8 +439,6 @@ const transformAveragesForRadar = (data: string[][]): CategoryResult => {
     };
     result.push(categoryObject);
   });
-
-  console.log(result);
 
   return result;
 };
