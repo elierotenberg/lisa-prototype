@@ -397,7 +397,7 @@ const transformAveragesForSpeedometers = (
       const score = getScoreByDomain(cleanedData, domainName);
       sumScorePerCategory += Math.abs(score - 5);
       nbOfDomainsPerCategory += 1;
-    }); 
+    });
     result[categoryName] = sumScorePerCategory / nbOfDomainsPerCategory;
   });
 
